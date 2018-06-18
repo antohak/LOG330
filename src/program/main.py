@@ -1,7 +1,6 @@
 import csv
 
-from src.progra
-m.Operations import Operations
+from src.program.Operations import Operations
 matrix = []
 with open('csv/donnees_correlation.csv', 'r') as csv_file:
     csv_reader = csv.reader(csv_file)
@@ -17,6 +16,3 @@ with open('csv/donnees_correlation.csv', 'r') as csv_file:
 
     print('r = ', round(correlation[0], 8))
     print('r*r = ', round(correlation[1], 8))
-
-
-

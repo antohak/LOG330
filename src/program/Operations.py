@@ -5,7 +5,7 @@ class Operations:
         Calculates the average 
         @:return will return float representation of average
     """
-    def average(data):
+    def average(self, data):
         list = data
         n = len(data)
         sum = 0
@@ -19,7 +19,7 @@ class Operations:
     def variance(self, data):
         list = data
         n = len(data)
-        average = self.average()
+        average = self.average(list)
         sum = 0
         for x in list:
             sum += float((x - average)*(x - average))
@@ -30,7 +30,7 @@ class Operations:
         @:return will return the s.d
     """
     def standard_deviation(self, data):
-        return round(math.sqrt(self.variance()), 2)
+        return round(math.sqrt(self.variance(data)), 2)
 
     """
         Calculates the correlation
@@ -61,6 +61,12 @@ class Operations:
 
         return [r, r*r]
 
+    """
+        Returns the sum of a specified column
+        @:param data list paired with values x, y respectively. 
+        @:param c the column to sum up.
+        @:return will return the sum of the column
+    """
     def sum_column(self, data, c):
         sum = 0
         for r in range(len(data)):

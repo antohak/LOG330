@@ -13,10 +13,8 @@ class test_variance(unittest.TestCase):
             csv_reader = csv.reader(csv_file)
             for number in csv_reader:
                 list.append(int(number[0]))
-
-        operations = Operations(list)
-        # Test avg == 638.90
-        self.assertAlmostEqual(operations.variance(), 391417.8778)
+        operations = Operations()
+        self.assertAlmostEqual(operations.variance(list), 391417.8778)
 
     def test_var_06(self):
         list = []
@@ -25,7 +23,5 @@ class test_variance(unittest.TestCase):
             csv_reader = csv.reader(csv_file)
             for number in csv_reader:
                 list.append(int(number[0]))
-
-        operations = Operations(list)
-        # Test avg == 638.9
-        self.assertAlmostEqual(operations.variance(), 391417.8778)
+        operations = Operations()
+        self.assertAlmostEqual(operations.variance(list), 391417.8778)
