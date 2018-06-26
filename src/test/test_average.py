@@ -14,9 +14,8 @@ class test_average(unittest.TestCase):
             for number in csv_reader:
                 list.append(int(number[0]))
 
-        operations = Operations(list)
-        # Test avg == 638.9
-        self.assertAlmostEqual(operations.average(), 638.9)
+        operations = Operations()
+        self.assertAlmostEqual(operations.average(list), 638.9)
 
     def test_avg_02(self):
         list = []
@@ -26,6 +25,5 @@ class test_average(unittest.TestCase):
             for number in csv_reader:
                 list.append(int(number[0]))
 
-        operations = Operations(list)
-        # Test avg == 638.9
-        self.assertAlmostEqual(operations.average(), 638.9)
+        operations = Operations()
+        self.assertAlmostEqual(operations.average(list), 638.9)
