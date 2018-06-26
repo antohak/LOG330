@@ -61,6 +61,25 @@ class Operations:
 
         return [r, r*r]
 
+    def regression(self, data):
+        temp = data
+        for d in temp:
+            x = d[0]
+            y = d[1]
+            xx = round(x*x, 2)
+            xy = round(x*y, 2)
+            d.extend([xx, xy])
+        n = len(temp)
+        avg_x = self.average(self.get_column(temp, 0))
+        avg_y = self.average(self.get_column(temp, 1))
+        sum_xx = self.sum_column(temp, 2)
+        sum_xy = self.sum_column(temp, 3)
+
+        b1 = (sum_xy-n*avg_x*avg_y) / (sum_xx-n*avg_x*avg_x)
+        b0 = avg_y-b1*avg_x
+
+        return [b1, b0]
+
     """
         Returns the sum of a specified column
         @:param data list paired with values x, y respectively. 
@@ -72,3 +91,9 @@ class Operations:
         for r in range(len(data)):
             sum += data[r][c]
         return sum
+
+    def get_column(self, data, c):
+        temp = []
+        for r in range(len(data)):
+            temp.append(data[r][c])
+        return temp
