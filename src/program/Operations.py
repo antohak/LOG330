@@ -35,7 +35,7 @@ class Operations:
     """
         Calculates the correlation
         @:param data list paired with values x, y respectively. 
-        @:return will return the s.d
+        @:return will return r and r*r respectively
     """
     def correlation(self, data):
         temp = data
@@ -61,6 +61,11 @@ class Operations:
 
         return [r, r*r]
 
+    """
+        Calculates the regression 
+        @:param data list paired with values x, y respectively. 
+        @:return will return the coefficients b1 and b0 respectively.
+    """
     def regression(self, data):
         temp = data
         for d in temp:
@@ -91,7 +96,12 @@ class Operations:
         for r in range(len(data)):
             sum += data[r][c]
         return sum
-
+    """
+        Returns a single column 
+        @:param data list paired with values x, y respectively. 
+        @:param c the column number
+        @:return will return the column specified
+    """
     def get_column(self, data, c):
         temp = []
         for r in range(len(data)):
