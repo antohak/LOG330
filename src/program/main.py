@@ -2,40 +2,49 @@ import csv
 
 from src.program.Operations import Operations
 matrix = []
-with open('csv/donnees_regression.csv', 'r') as csv_file:
-    csv_reader = csv.reader(csv_file)
-    # skip first line since array is dynamic an first line is for number of data.
-    next(csv_reader)
+reduced_matrix = []
+with open('csv/donnees_de_test.csv', 'r') as csv_file:
+    csv_reader = csv.reader(csv_file, delimiter=";")
     for line in csv_reader:
-        numbers = line[0].split(';')
-        numbers = [float(n) for n in numbers]
-        matrix.append(numbers)
+        matrix.append(line)
 
     operations = Operations()
-    regression = operations.regression(matrix)
-    b1 = round(regression[0], 9)
-    b0 = round(regression[1], 8)
 
-    print('b1 = ', b1)
-    print('b0 = ', b0)
-    print()
-    print()
+    for i in range(len(matrix)):
+        for j in range(len(matrix[i])):
+            if j != 0:
+                matrix[i][j] = float(matrix[i][j].replace(",", "."))
 
-    exit = False
-    while not exit:
-        i = input('Which value do you which to calculate? (x or y): ')
-        if i == 'x':
-            y = float(input('Please enter a value for y (4 decimals max): '))
-            print(y)
-            x = round((y-b0)/b1, 5)
-            print('X = %d' % x)
-        elif i == 'y':
-            x = float(input('Please enter a value for x (4 decimals max): '))
-            y = round(b0 + x*b1, 5)
-            print('Y = %d' % y)
-        else:
-            print('Wrong input')
-        c = input('do you wish to continue? (y or n): ')
-        if c == 'n':
-            exit = True
+    for i in range(len(matrix)):
+        data = operations.get_range_column(matrix[i], 1, 6)
+        average = operations.average(data)
+        temp = [average, matrix[i][7]]
+        reduced_matrix.append(temp)
+
+    c = operations.correlation(reduced_matrix)[0]
+
+    print('\nCalcule de la correlation')
+    print('-----------------------------\n')
+    print('correlation = ', c)
+    print('')
+
+    message = "La correlation entre le temps consacre aux etudes selon les donnees\n" \
+              "et les resultas obtenus a l'intra par les etudiants est "
+
+    if c >= 0 and c < 0.2:
+        message += "faible"
+    if c >= 0.2 and c < 0.4:
+        message += "moyenne"
+    if c >= 0.4 and c < 0.7:
+        message += "forte"
+    if c >= 0.7 and c < 0.9:
+        message += "tres forte"
+    if c >= 0.9 and c <= 1:
+        message += "parfaite"
+
+    print(message)
+
+
+
+
 
