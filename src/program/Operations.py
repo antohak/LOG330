@@ -92,8 +92,28 @@ class Operations:
             sum += data[r][c]
         return sum
 
+    """
+        Returns a table with data from a specified column from 2d data list
+        @:param data list paired with values x, y respectively. 
+        @:param c the column to return.
+        @:return will return a table with the specified column
+    """
     def get_column(self, data, c):
         temp = []
         for r in range(len(data)):
             temp.append(data[r][c])
+        return temp
+
+    """
+        Returns a table that contains data between two specified columns
+        @:param data list paired with values x, y respectively. 
+        @:param c1 range 1
+        @:param c2 range 2
+        @:return will return a table with data from c1 to c2
+    """
+    def get_range_column(self, data, c1, c2):
+        temp = []
+        for c in range(len(data)):
+            if c >= c1 and c <= c2:
+                temp.append(data[c])
         return temp
