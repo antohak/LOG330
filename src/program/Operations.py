@@ -33,6 +33,57 @@ class Operations:
         return round(math.sqrt(self.variance(data)), 2)
 
     """
+        Calculates the standard deviation with paired data
+        @:return will return the s.d
+    """
+    def standard_deviation_pair(self, data):
+        list = data
+        n = len(list)
+        regression = self.regression(list)
+        b1 = regression[0]
+        b0 = regression[1]
+        sum = 0
+        for i in range(n):
+            xi = float(list[i][0])
+            yi = float(list[i][1])
+            yreg = b0+(b1*xi)
+            sum += (yi-yreg)*(yi-yreg)
+        return round(math.sqrt((1/(n-1))*sum), 2)
+
+    """
+        Calculates the interval
+        @:param t distribution value
+        @:param std standard_deviation 
+        @:return will return the interval value
+    """
+    def interval(self, t, std, data):
+        list = data
+        n = len(list)
+        xk = 900
+        xavg = self.average(self.get_column(list, 0))
+        sum = 0
+        for i in range(n):
+            xi = list[i][0]
+            sum += (xi-xavg)*(xi-xavg)
+        interval = t*std*math.sqrt(1+(1/n)+((xk-xavg)*(xk-xavg))/(sum*sum))
+        return round(interval,2)
+
+    """
+        Calculates the inferior and superior limits 
+        @:param data paired list value
+        @:param interval the interval 
+        @:return will return an array containing the lowest and highest point
+    """
+    def limits(self, data, interval):
+        list = data
+        reg = self.regression(list)
+        b1 = reg[0]
+        b0 = reg[1]
+        xk = 900
+        yk = b0 + (b1 * xk)
+        return [round(xk - interval,2), round(xk + interval, 2)]
+
+    """
         Calculates the correlation
         @:param data list paired with values x, y respectively. 
         @:return will return the s.d
@@ -60,7 +111,11 @@ class Operations:
         r = numerator/denominator
 
         return [r, r*r]
-
+    """
+        Calculate the regression values b0 and b1
+        @:param data paired list value
+        @:return returns an array containing b1 and b0 respectively
+    """
     def regression(self, data):
         temp = data
         for d in temp:
