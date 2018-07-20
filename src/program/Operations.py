@@ -81,7 +81,7 @@ class Operations:
         b0 = reg[1]
         xk = 900
         yk = b0 + (b1 * xk)
-        return [round(xk - interval,2), round(xk + interval, 2)]
+        return [round(xk - interval, 2), round(xk + interval, 2)]
 
     """
         Calculates the correlation
