@@ -2,7 +2,6 @@ import csv
 
 from src.program.Operations import Operations
 matrix = []
-reduced_matrix = []
 with open('csv/donnees_regression.csv', 'r') as csv_file:
     csv_reader = csv.reader(csv_file)
     for line in csv_reader:
