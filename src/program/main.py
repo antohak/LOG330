@@ -2,49 +2,28 @@ import csv
 
 from src.program.Operations import Operations
 matrix = []
-reduced_matrix = []
-with open('csv/donnees_de_test.csv', 'r') as csv_file:
-    csv_reader = csv.reader(csv_file, delimiter=";")
+with open('csv/donnees_regression.csv', 'r') as csv_file:
+    csv_reader = csv.reader(csv_file)
     for line in csv_reader:
-        matrix.append(line)
+        numbers = line[0].split(';')
+        numbers = [float(n) for n in numbers]
+        matrix.append(numbers)
 
     operations = Operations()
-
-    for i in range(len(matrix)):
-        for j in range(len(matrix[i])):
-            if j != 0:
-                matrix[i][j] = float(matrix[i][j].replace(",", "."))
-
-    for i in range(len(matrix)):
-        data = operations.get_range_column(matrix[i], 1, 6)
-        average = operations.average(data)
-        temp = [average, matrix[i][7]]
-        reduced_matrix.append(temp)
-
-    c = operations.correlation(reduced_matrix)[0]
-
-    print('\nCalcule de la correlation')
-    print('-----------------------------\n')
-    print('correlation = ', c)
-    print('')
-
-    message = "La correlation entre le temps consacre aux etudes selon les donnees\n" \
-              "et les resultas obtenus a l'intra par les etudiants est "
-
-    if c >= 0 and c < 0.2:
-        message += "faible"
-    if c >= 0.2 and c < 0.4:
-        message += "moyenne"
-    if c >= 0.4 and c < 0.7:
-        message += "forte"
-    if c >= 0.7 and c < 0.9:
-        message += "tres forte"
-    if c >= 0.9 and c <= 1:
-        message += "parfaite"
-
-    print(message)
-
-
-
-
+    std = operations.standard_deviation_pair(matrix)
+    interval_70 = operations.interval(1.108, std, matrix)
+    interval_90 = operations.interval(1.806, std, matrix)
+    print("Calcule de l'ecart type")
+    print("-----------------------------")
+    print(std)
+    print()
+    print("Calcule de l'intervalle et limites (70%)")
+    print("---------------------------------------------")
+    print("Intervalle: ", interval_70)
+    print("Limites: ", operations.limits(matrix, interval_70))
+    print()
+    print("Calcule de l'intervalle et limites (90%)")
+    print("---------------------------------------------")
+    print("Intervalle: ", interval_90)
+    print("Limites: ", operations.limits(matrix, interval_90))
 
